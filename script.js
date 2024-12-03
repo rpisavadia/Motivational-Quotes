@@ -21,7 +21,7 @@ document.getElementById('newQuoteButton').addEventListener('click', displayRando
 async function fetchRandomQuote() {
     try {
         // Requesting a random quote from the Quotable API
-        const response = await fetch("http://api.quotable.io/random");
+        const response = await fetch("https://api.quotable.io/random");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
