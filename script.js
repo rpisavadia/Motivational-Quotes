@@ -21,7 +21,7 @@ document.getElementById('newQuoteButton').addEventListener('click', displayRando
 async function fetchRandomQuote() {
     try {
         // Requesting a random quote from the API without using tags
-        const response = await fetch("https://zenquotes.io/api/random");
+        const response = await fetch("https://zenquotes.io/api/quotes");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
