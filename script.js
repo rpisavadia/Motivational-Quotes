@@ -20,16 +20,13 @@ document.getElementById('newQuoteButton').addEventListener('click', displayRando
 
 async function fetchRandomQuote() {
     try {
-        // Requesting a random quote from the Quotable API
-        const response = await fetch("https://api.quotable.io/random");
+        const response = await fetch("https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-
-        // Extracting and displaying the quote and author
-        document.getElementById('quoteDisplay').innerText = `"${data.content}"`;
-        document.getElementById('authorDisplay').innerText = `- ${data.author}`;
+        document.getElementById('quoteDisplay').innerText = `"${data.quoteText}"`;
+        document.getElementById('authorDisplay').innerText = data.quoteAuthor ? `- ${data.quoteAuthor}` : "- Unknown";
     } catch (error) {
         console.error("Error fetching the quote:", error);
         document.getElementById('quoteDisplay').innerText = "Could not fetch a quote.";
@@ -37,7 +34,11 @@ async function fetchRandomQuote() {
     }
 }
 
+
 // Attach the function to the button click
 document.getElementById('newQuoteButton').addEventListener('click', fetchRandomQuote);
+
+
+
 
 
