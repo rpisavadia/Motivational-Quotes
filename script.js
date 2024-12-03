@@ -18,18 +18,27 @@ function displayRandomQuote() {
 // Event listener for the button
 document.getElementById('newQuoteButton').addEventListener('click', displayRandomQuote);
 
-// Function to fetch a random quote from the API
 async function fetchRandomQuote() {
     try {
-        const response = await fetch("https://zenquotes.io/api/[mode]?option1=value&option2=value");
+        // Requesting a random quote from the API without using tags
+        const response = await fetch("https://zenquotes.io/api/random");
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data = await response.json();
-        document.getElementById('quoteDisplay').innerText = `"${data.content}"`;
-        document.getElementById('authorDisplay').innerText = `- ${data.author}`;
+
+        // Extracting and displaying the quote
+        const quote = data[0]; // The API returns an array with one quote object
+        console.log(`"${quote.q}" — ${quote.a}`);
+        document.getElementById('quoteDisplay').innerText = `"${quote.q}"`;
+        document.getElementById('authorDisplay').innerText = `- ${quote.a}`;
     } catch (error) {
-        document.getElementById('quoteDisplay').innerText = "Oops! Couldn't fetch a quote.";
+        console.error("Error fetching the quote:", error);
+        document.getElementById('quoteDisplay').innerText = "Could not fetch a quote.";
         document.getElementById('authorDisplay').innerText = "";
     }
 }
 
-// Event listener to call API on button click
+// Trigger the quote fetching function on button click
 document.getElementById('newQuoteButton').addEventListener('click', fetchRandomQuote);
+
