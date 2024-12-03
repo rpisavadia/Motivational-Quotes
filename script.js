@@ -20,18 +20,16 @@ document.getElementById('newQuoteButton').addEventListener('click', displayRando
 
 async function fetchRandomQuote() {
     try {
-        // Requesting a random quote from the API without using tags
-        const response = await fetch("https://zenquotes.io/api/quotes");
+        // Requesting a random quote from the Quotable API
+        const response = await fetch("http://api.quotable.io/random");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
 
-        // Extracting and displaying the quote
-        const quote = data[0]; // The API returns an array with one quote object
-        console.log(`"${quote.q}" — ${quote.a}`);
-        document.getElementById('quoteDisplay').innerText = `"${quote.q}"`;
-        document.getElementById('authorDisplay').innerText = `- ${quote.a}`;
+        // Extracting and displaying the quote and author
+        document.getElementById('quoteDisplay').innerText = `"${data.content}"`;
+        document.getElementById('authorDisplay').innerText = `- ${data.author}`;
     } catch (error) {
         console.error("Error fetching the quote:", error);
         document.getElementById('quoteDisplay').innerText = "Could not fetch a quote.";
@@ -39,6 +37,7 @@ async function fetchRandomQuote() {
     }
 }
 
-// Trigger the quote fetching function on button click
+// Attach the function to the button click
 document.getElementById('newQuoteButton').addEventListener('click', fetchRandomQuote);
+
 
