@@ -19,12 +19,13 @@ function displayRandomQuote() {
 document.getElementById('newQuoteButton').addEventListener('click', displayRandomQuote);
 
 async function fetchRandomQuote() {
+    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+    const targetUrl = "https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
+
     try {
-        const response = await fetch("https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en");
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const response = await fetch(proxyUrl + targetUrl);
         const data = await response.json();
+
         document.getElementById('quoteDisplay').innerText = `"${data.quoteText}"`;
         document.getElementById('authorDisplay').innerText = data.quoteAuthor ? `- ${data.quoteAuthor}` : "- Unknown";
     } catch (error) {
@@ -33,6 +34,7 @@ async function fetchRandomQuote() {
         document.getElementById('authorDisplay').innerText = "";
     }
 }
+
 
 
 // Attach the function to the button click
